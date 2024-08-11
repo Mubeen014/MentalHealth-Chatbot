@@ -1,14 +1,32 @@
+// userpage/UserPageContent.js
 'use client'; // Ensure client-side rendering
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { signOut } from 'firebase/auth';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/navigation
-import { auth } from '@/firebaseConfig'; // Adjust path as needed
-import Chatbot from './Chatbot'; // Import the Chatbot component
+import { useRouter } from 'next/navigation';
+import { auth, db } from '@/firebaseConfig'; // Adjust path as needed
+import { doc, getDoc } from 'firebase/firestore';
+import Chatbot from './chatbot'; // Import the Chatbot component
 
 const UserPageContent = () => {
+  const [userDetails, setUserDetails] = useState(null);
   const router = useRouter(); // Initialize useRouter
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setUserDetails(userDoc.data());
+        }
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -39,7 +57,8 @@ const UserPageContent = () => {
         >
           Sign Out
         </Button>
-        <Chatbot /> {/* Include the Chatbot component */}
+        {/* Render Chatbot with userDetails prop */}
+        {userDetails && <Chatbot userDetails={userDetails} />}
       </Box>
     </Container>
   );

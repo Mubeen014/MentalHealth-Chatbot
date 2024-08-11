@@ -2,15 +2,16 @@
 
 import React, { useState } from 'react';
 import { Container, Typography, Button, TextField, Box } from '@mui/material';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/navigation
+import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/firebaseConfig'; // Adjust path as needed
+import { auth } from '@/firebaseConfig';
 
 const SigninPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+
 
   const handleSignIn = async () => {
     try {
@@ -31,6 +32,7 @@ const SigninPage = () => {
       }
     }
   };
+
 
   return (
     <Container maxWidth="sm">
