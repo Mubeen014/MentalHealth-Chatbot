@@ -209,7 +209,7 @@ const Chatbot = () => {
               >
                 {message.role === 'assistant' && (
                   <Avatar
-                    src="/images/assistant-avatar.png" // Correct path
+                    src="/assistant-avatar.png" // Correct path
                     alt="Assistant"
                     sx={{ mr: 1, width: 32, height: 32 }}
                   />
@@ -227,7 +227,7 @@ const Chatbot = () => {
                 </Box>
                 {message.role === 'user' && (
                   <Avatar
-                    src={userDetails?.photoURL || '/images/assistant-avatar.png'}
+                    src="/user-avatar.png"
                     alt="User"
                     sx={{ ml: 1, width: 32, height: 32 }}
                   />
